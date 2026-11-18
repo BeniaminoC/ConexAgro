@@ -1,0 +1,16 @@
+# PostgreSQL local para desarrollo y pruebas:  docker compose up -d
+# (NO verificado en esta sesión: el entorno de trabajo no tenía demonio de Docker.)
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: conexagro
+      POSTGRES_PASSWORD: conexagro
+      POSTGRES_DB: conexagro
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

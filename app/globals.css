@@ -1,0 +1,73 @@
+/* Paleta y tipografía del ERS (secciones 6.5 y RI-02). Espaciado en múltiplos de 4/8 px. */
+:root {
+  --color-primario: #123C2E;
+  --color-secundario: #F2B01E;
+  --color-alerta: #DC2626;
+  --color-advertencia: #FFE6A1;
+  --color-fondo: #F4F7F0;
+  --color-texto: #0F271A;
+  --color-tarjeta: #FFFFFF;
+}
+
+* { box-sizing: border-box; }
+html { font-size: 112.5%; } /* 18 px: legible sin zoom en móvil */
+body {
+  margin: 0; background: var(--color-fondo); color: var(--color-texto);
+  font-family: 'Times New Roman', Times, serif; line-height: 1.5;
+}
+main { max-width: 48rem; margin: 0 auto; padding: 24px 16px 48px; }
+main:focus { outline: none; }
+h1 { color: var(--color-primario); margin: 0 0 16px; }
+h2 { margin: 0 0 8px; font-size: 1.25rem; }
+a { color: var(--color-primario); }
+
+.skip { position: absolute; left: -999px; top: 0; background: var(--color-secundario); color: var(--color-texto); padding: 8px 16px; z-index: 10; }
+.skip:focus { left: 8px; top: 8px; }
+
+.site-header { background: var(--color-primario); }
+.site-header nav { max-width: 48rem; margin: 0 auto; padding: 8px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; }
+.site-header ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 8px; }
+.site-header a, .link-btn { color: #fff; display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; }
+.brand { font-weight: bold; font-size: 1.2rem; text-decoration: none; }
+a[aria-current='page'] { text-decoration: underline; text-decoration-thickness: 3px; }
+.link-btn { background: none; border: 0; font: inherit; cursor: pointer; text-decoration: underline; }
+
+:focus-visible { outline: 3px solid var(--color-secundario); outline-offset: 2px; }
+.site-header :focus-visible, .skip:focus-visible { outline-color: #fff; }
+
+.card { background: var(--color-tarjeta); border: 1px solid #c9d3c4; border-radius: 8px; padding: 16px; margin: 16px 0; }
+.list { list-style: none; padding: 0; margin: 0; }
+
+.field { margin-bottom: 16px; }
+label { display: block; font-weight: bold; margin-bottom: 4px; }
+.check { display: flex; align-items: center; gap: 8px; font-weight: normal; min-height: 44px; }
+.check input { width: 24px; height: 24px; flex: none; }
+input:not([type='checkbox']), select, textarea {
+  width: 100%; min-height: 44px; padding: 8px; font: inherit; color: var(--color-texto);
+  background: #fff; border: 2px solid var(--color-primario); border-radius: 4px;
+}
+[aria-invalid='true'] { border-color: var(--color-alerta); }
+fieldset { border: 1px solid #c9d3c4; border-radius: 4px; margin: 0 0 16px; padding: 8px 16px; }
+legend { font-weight: bold; padding: 0 4px; }
+.hint { color: #3d5246; font-size: 0.9rem; margin: 0 0 4px; }
+.error { color: #B91C1C; margin: 4px 0 0; font-weight: bold; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px;
+  padding: 8px 20px; font: inherit; font-weight: bold; cursor: pointer; text-decoration: none;
+  background: var(--color-primario); color: #fff; border: 2px solid var(--color-primario); border-radius: 4px;
+}
+.btn-sec { background: var(--color-secundario); color: var(--color-texto); border-color: var(--color-texto); }
+.btn:hover:not(:disabled) { filter: brightness(1.15); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.actions, .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+
+.alert { background: var(--color-advertencia); border-left: 6px solid var(--color-alerta); padding: 8px 16px; border-radius: 4px; }
+.ok { background: #E3F1E7; border-left: 6px solid var(--color-primario); padding: 8px 16px; border-radius: 4px; }
+.badge { display: inline-block; font-size: 0.8rem; padding: 0 8px; border: 2px solid var(--color-texto); border-radius: 12px; background: var(--color-advertencia); }
+.badge-aceptada { background: #E3F1E7; }
+.badge-rechazada { background: #fff; text-decoration: line-through; }
+summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: bold; }
+
+@media (min-width: 768px) { main { padding-top: 40px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

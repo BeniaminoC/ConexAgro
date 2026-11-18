@@ -1,0 +1,28 @@
+{
+  "name": "conexagro",
+  "version": "0.7.0",
+  "private": true,
+  "type": "module",
+  "description": "ConexAgro - plataforma web (Next.js + PostgreSQL). Módulo de gestión de proyectos (RF-04).",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "migrate": "node scripts/migrate.js",
+    "create-admin": "node scripts/create-admin.js",
+    "test:auth": "node --test test/auth.test.js",
+    "test:unit": "node --test test/auth.test.js test/domain.test.js",
+    "test": "node --test --test-concurrency=1 \"test/*.test.js\"",
+    "seed-demo": "node scripts/seed-demo.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "next": "^16.4.6",
+    "pg": "^8.23.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  }
+}
