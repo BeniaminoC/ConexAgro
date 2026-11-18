@@ -1,5 +1,5 @@
 import './globals.css';
-import Nav from './components/Nav.js';
+import Shell from './components/Shell.js';
 
 export const metadata = {
   title: 'ConexAgro',
@@ -10,11 +10,7 @@ export const viewport = { width: 'device-width', initialScale: 1 };
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body>
-        <a href="#contenido" className="skip">Saltar al contenido</a>
-        <Nav />
-        <main id="contenido" tabIndex={-1}>{children}</main>
-      </body>
+      <body><Shell>{children}</Shell></body>
     </html>
   );
 }

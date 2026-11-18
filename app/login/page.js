@@ -27,7 +27,7 @@ export default function Login() {
     setBusy(true);
     const r = await apiFetch('/auth/login', { method: 'POST', auth: false, body: { correo, contrasena } });
     setBusy(false);
-    if (r.ok) { saveSession(r.body.data); router.push('/solicitudes'); return; }
+    if (r.ok) { saveSession(r.body.data); router.push('/oportunidades'); return; }
     setErrors(fieldErrors(r.body));
     setCode(r.body?.error?.code || '');
     setFormError(errorText(r.body));
@@ -41,11 +41,12 @@ export default function Login() {
 
   return (
     <section>
-      <h1>Iniciar sesión</h1>
+      <p className="eyebrow">Bienvenido de nuevo</p>
+      <h1>Ingresa a tu cuenta</h1>
       {formError && <p className="alert" role="alert">{formError}</p>}
       {code === 'EMAIL_NOT_VERIFIED' && <p><button type="button" className="btn btn-sec" onClick={resend}>Reenviar correo de verificación</button></p>}
       {info && <p className="ok" role="status">{info}</p>}
-      <form onSubmit={submit} noValidate className="card">
+      <form onSubmit={submit} noValidate className="card" style={{ maxWidth: '28rem' }}>
         <Field id="correo" label="Correo electrónico" error={errors.correo}>
           {(a) => <input id="correo" type="email" autoComplete="email" value={correo} onChange={(e) => setCorreo(e.target.value)} {...a} />}
         </Field>

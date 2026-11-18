@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { apiFetch, useSession } from '../../../src/ui/session.js';
 import { MAX_PDF_BYTES, cop, errorText, fechaHora } from '../../../src/ui/format.js';
+import { PinIcon, SproutArt } from '../../components/Art.js';
 
 export default function DetalleProyecto() {
   const { id } = useParams();
@@ -24,7 +25,7 @@ export default function DetalleProyecto() {
   useEffect(() => { if (ready && session) load(); }, [ready, session, load]);
 
   if (!ready || !session) return <p>Cargando…</p>;
-  if (error) return <section><h1>Proyecto</h1><p className="alert" role="alert">{error}</p><p><Link href="/proyectos">Volver a mis proyectos</Link></p></section>;
+  if (error) return <section><h1>Proyecto</h1><p className="alert" role="alert">{error}</p><p><Link className="back" href="/oportunidades">← Volver a oportunidades</Link></p></section>;
   if (!p) return <p>Cargando proyecto…</p>;
 
   const esAutor = String(p.autorId) === String(session.user.id) || session.user.roles?.includes('ADMINISTRADOR');
@@ -68,17 +69,22 @@ export default function DetalleProyecto() {
 
   return (
     <section>
-      <h1>{p.nombre} <span className={`badge ${p.estado === 'cerrado' ? 'badge-rechazada' : 'badge-aceptada'}`}>{p.estado === 'activo' ? 'Activo' : 'Cerrado'}</span></h1>
-      <div className="card">
-        <p>{p.descripcion}</p>
-        <dl>
-          <dt>Cultivo o actividad</dt><dd>{p.tipoCultivo}</dd>
-          <dt>Área requerida</dt><dd>{p.areaRequeridaHa} ha</dd>
-          <dt>Ubicación deseada</dt><dd>{p.ubicacionDeseada}</dd>
-          <dt>Inversión requerida</dt><dd>{cop(p.montoInversion)}</dd>
-          <dt>Retorno estimado</dt><dd>{p.tiempoRetornoMeses} meses</dd>
-          <dt>Publicado</dt><dd>{fechaHora(p.creadoEn)}</dd>
-        </dl>
+      <Link className="back" href={esAutor ? '/proyectos' : '/oportunidades'}>← {esAutor ? 'Volver a mis proyectos' : 'Volver a oportunidades'}</Link>
+      <div className="hero">
+        <div className="hero-art"><SproutArt tone={[...p.tipoCultivo].reduce((x, c) => x + c.charCodeAt(0), 0) % 4} /></div>
+        <div>
+          <p className="eyebrow">Proyecto</p>
+          <h1>{p.nombre} <span className={`badge ${p.estado === 'cerrado' ? 'badge-rechazada' : 'badge-aceptada'}`}>{p.estado === 'activo' ? 'Activo' : 'Cerrado'}</span></h1>
+          <p className="opp-loc"><PinIcon /> {p.ubicacionDeseada}</p>
+          <p>{p.descripcion}</p>
+          <dl className="stats">
+            <div><dt>Capital requerido</dt><dd>{cop(p.montoInversion)}</dd></div>
+            <div><dt>Retorno estimado</dt><dd>{p.tiempoRetornoMeses} meses</dd></div>
+            <div><dt>Área requerida</dt><dd>{Number(p.areaRequeridaHa).toLocaleString('es-CO')} ha</dd></div>
+            <div><dt>Cultivo o actividad</dt><dd>{p.tipoCultivo}</dd></div>
+            <div><dt>Publicado</dt><dd>{fechaHora(p.creadoEn)}</dd></div>
+          </dl>
+        </div>
       </div>
 
       <h2>Documento de soporte</h2>
@@ -118,7 +124,6 @@ export default function DetalleProyecto() {
             )}
         </div>
       )}
-      <p><Link href="/proyectos">Volver a mis proyectos</Link></p>
     </section>
   );
 }

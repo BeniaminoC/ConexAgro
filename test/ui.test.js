@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { isIdle, IDLE_MS, errorText, validateRegistration, estadoLabel, parseProject, cop } from '../src/ui/format.js';
+import { isIdle, IDLE_MS, errorText, validateRegistration, estadoLabel, parseProject, cop, copCorto } from '../src/ui/format.js';
 
 test('inactividad: expira pasados 30 min (RN-09)', () => {
   const now = 1_000_000_000;
@@ -38,3 +38,10 @@ test('parseProject: todos obligatorios; área/monto > 0 con 2 decimales; meses e
   assert.equal(Object.keys(parseProject({}).errors).length, 7);
 });
 test('cop formatea pesos', () => { assert.match(cop(80000000), /80\.000\.000/); });
+
+test('copCorto abrevia montos para las tarjetas', () => {
+  assert.equal(copCorto(55_000_000), '$55 M');
+  assert.equal(copCorto(80_500_000), '$80,5 M');
+  assert.equal(copCorto(450_000), '$450 mil');
+  assert.equal(copCorto('x'), '—');
+});

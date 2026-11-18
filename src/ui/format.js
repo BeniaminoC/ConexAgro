@@ -63,3 +63,14 @@ export function parseProject(f) {
   if (!Number.isInteger(tiempoRetornoMeses) || tiempoRetornoMeses < 1 || tiempoRetornoMeses > 600) e.tiempoRetornoMeses = 'Entero entre 1 y 600 meses';
   return { errors: e, data: { nombre, descripcion, tipoCultivo, areaRequeridaHa, ubicacionDeseada, montoInversion, tiempoRetornoMeses } };
 }
+
+// Monto abreviado para tarjetas: 55000000 → «$55 M»; 80500000 → «$80,5 M»; 450000 → «$450 mil».
+export function copCorto(n) {
+  const v = Number(n);
+  if (!Number.isFinite(v)) return '—';
+  if (v >= 1_000_000) return `$${(v / 1_000_000).toLocaleString('es-CO', { maximumFractionDigits: 1 })} M`;
+  if (v >= 1_000) return `$${Math.round(v / 1_000).toLocaleString('es-CO')} mil`;
+  return `$${v.toLocaleString('es-CO')}`;
+}
+
+export const fechaCorta = (iso) => new Date(iso).toLocaleDateString('es-CO', { dateStyle: 'medium' });
